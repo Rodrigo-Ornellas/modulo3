@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block chamada %}Lista de pizzas a fazer{% endblock %}
+
+{% block corpo %}
+
+<h2>{{hora}}</h2>
+
+<ol>
+{% for pizza in lista %}
+   <li>{{pizza}}</li>
+{% endfor %}   
+</ol>
+
+{% endblock corpo %}

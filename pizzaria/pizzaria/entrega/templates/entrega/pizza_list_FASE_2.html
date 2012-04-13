@@ -7,21 +7,20 @@
 <h2>{{hora}}</h2>
 
 <table border="1">
-   <tr><td>#</td><td>Finaliza Pedido</td><td># do Pedido</td><td>Pedido</td></tr>
+   <tr><td>#</td><td>Pizza</td></tr>
 
 {% for pizza in lista %}
    <tr>
         <td>{{ forloop.counter }}</td>
         <!-- <td>{{pizza}}</td></tr> -->
         <td>
-            <form action="{% url pedido-pronto %}" method="POST">
+            <form action="{# url pizza-feita#}" method="POST">
                     {% csrf_token %}
                     <!-- csrf = Cross Site Request Forgery protection -->
-                    <input type="hidden" name="pedido_id" value="{{pizza.pedido_id}}">
-                    <input type="submit" name="pronto" value="Pedido{{pizza.pedido_id}} pronto">
+                    <input type="hidden" name="pk" value={{"pizza.pk"}}>
+                    <input type="submit" name="feita" value="Feita">
             </form>
         </td>
-        <td>{{pizza.pedido_id}}</td>
         <td>{{pizza}}</td>                
     </tr>
                                  

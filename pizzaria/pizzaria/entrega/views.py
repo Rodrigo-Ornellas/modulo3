@@ -2,17 +2,19 @@
 
 # Create your views here.
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
 import datetime
 
-from .models import Pizza
+from .models import Pizza, Pedido
+from .forms import ClienteModelForm, ObservacaoClienteForm
+from django.core.urlresolvers import reverse
 
 def pizzas_pendentes(request):
     return render(request, 'entrega/pizzas.html', 
-                           {"fila": Pizza.objects.all(),
+                           {"fila": Pizza.objects.order_by('pedido'),
                             "hora": datetime.datetime.now()},
                            content_type="text/html")
 
@@ -43,5 +45,47 @@ def hello(request, texto):
     html = '<h1>Hello, %s</h1>' % texto
     return HttpResponse(html)
     
+def cadastro(request):
+    if request.method == 'POST': # enviar/submit significa usar o metodo post
+        formulario = ClienteModelForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            # não é bom URLs assim, usar REVERSE ao inves de URL amarrada
+            # return HttpResponseRedirect('/ent/clientes')  << assim é HARDCODED - nao é bom
+            return HttpResponseRedirect(reverse('lista-clientes'))
+            # a funcao reverse converte o NAME 'lista-clientes' em um URL absoluta. assim não colocamos a URL no codigo
+    else:
+        formulario = ClienteModelForm()
+    
+    return render(request, 'entrega/cadastro.html',
+                    {'formulario':formulario})
 
 
+def pedido_pronto(request):
+    if request.method =='POST':
+        pedido_id = request.POST.get('pedido_id')
+        pedido = Pedido.objects.get(pk=pedido_id)
+        pedido.pronto = True
+        pedido.save()
+    return HttpResponseRedirect(reverse('lista-pizzas'))
+    
+def cliente_obs(request):
+    if request.method == 'POST':
+        formulario = ObservacaoClienteForm(request.POST)
+        if formulario.is_valid():
+            cliente_id = request.POST.get('cliente_id')
+            cliente = Cliente.objects.get(pk=cliente_id)
+            cliente.obs = formulario.cleaned_data['obs']
+            cliente.save()
+    return HttpResponseRedirect(reverse('ficha-cli'))
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        

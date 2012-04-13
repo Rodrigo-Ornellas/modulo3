@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block chamada %}Cadastro de Cliente Novo{% endblock chamada %} 
+
+{% block corpo %} 
+
+<form action="." method="POST">
+    
+    {% csrf_token %}
+
+    {# esta eh outra forma de comentar dentro do arquivo HTML analisado pelo DJANGO #}
+    
+    <!-- esta eh o formato original
+    {{ formulario.as_p }}
+    -->
+    
+    <table border="1">
+    {{ formulario.as_table }}    
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Enviar" /></td>
+        </tr>
+    </table>
+    
+    <!--
+    <input type="submit" value="Enviar" />
+    -->
+</form>
+
+{% endblock corpo %} 

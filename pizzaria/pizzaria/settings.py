@@ -1,5 +1,9 @@
 # Django settings for pizzaria project.
 
+import os
+PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
+
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -66,12 +70,14 @@ STATIC_ROOT = ''
 STATIC_URL = '/static/'
 
 # Additional locations of static files
-STATICFILES_DIRS = (
-    '/home/turma2/modulo3/repo/pizzaria/pizzaria/static',
+STATICFILES_DIRS = (os.path.join(PROJECT_PATH, 'static'),)
+
+# abaixo o formato antigo antes de usar o 'PROJECT_PATH'
+# STATICFILES_DIRS = (     
+#     '/home/turma2/modulo3/repo/pizzaria/pizzaria/static', )
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-)
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -106,12 +112,13 @@ ROOT_URLCONF = 'pizzaria.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'pizzaria.wsgi.application'
 
-TEMPLATE_DIRS = (
-    '/home/turma2/modulo3/repo/pizzaria/pizzaria/templates',
+TEMPLATE_DIRS = (os.path.join(PROJECT_PATH, 'templates'),)
+# abaixo o formato antigo antes de usar o 'PROJECT_PATH'
+# TEMPLATE_DIRS = ('/home/turma2/modulo3/repo/pizzaria/pizzaria/templates',)
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-)
+
 
 INSTALLED_APPS = (
     'django.contrib.auth',
